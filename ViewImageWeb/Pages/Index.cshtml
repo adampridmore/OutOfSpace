@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "York Code Dojo - Image Viewer";
+}
+
+<div class="text-center">
+    <h1 class="display-4">York Code Dojo - Image Viewer</h1>
+    <h2>Upload your SIF file to view</h2>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit">Upload</button>
+    </form>
+
+    @if (Model.FileSize > 0)
+    {
+        <br/>
+        <h2>@Model.Filename</h2>
+        
+        @if (Model.FileSize != 1024 * 1024 * 3)
+        {
+            <div>Invalid File Size: @Model.FileSize</div>
+        }
+        
+        @if (Model.Image is not null)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(Model.Image)" />      
+            <div>Hash: @Model.Hash</div>
+        }
+
+    }
+    
+</div>

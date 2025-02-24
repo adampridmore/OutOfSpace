@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewImage", "ViewImage\ViewImage.csproj", "{88F9A909-0393-4CD8-A7F3-3AC5B5EDE4FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Story", "Story", "{835F76F3-8313-486D-AF81-B2B1718BB670}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+		docs\average.jpg = docs\average.jpg
+		docs\three_pixels.jpg = docs\three_pixels.jpg
+		docs\sif_layout.jpg = docs\sif_layout.jpg
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewImageWeb", "ViewImageWeb\ViewImageWeb.csproj", "{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88F9A909-0393-4CD8-A7F3-3AC5B5EDE4FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88F9A909-0393-4CD8-A7F3-3AC5B5EDE4FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88F9A909-0393-4CD8-A7F3-3AC5B5EDE4FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88F9A909-0393-4CD8-A7F3-3AC5B5EDE4FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
