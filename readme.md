@@ -9,7 +9,7 @@ more efficient way of storing the images.  You cannot unfortunately copy the fil
 the photographers will often need to re-visit their previous projects.
 
 In the past the company tried compressing the images using a 3rd party library.  When the images were decompressed however
-some of their quantity was lost.   The photographers were very angry at this and complained to the management.  This is the reason
+some of their quality was lost.   The photographers were very angry at this and complained to the management.  This is the reason
 why your predecessor no longer works at the company and external libraries (such as zip) are banned.
 
 ## Challenge
