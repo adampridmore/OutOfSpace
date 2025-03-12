@@ -402,3 +402,4 @@ FodyWeavers.xsd
 .idea/.idea.OutOfSpace/.idea/indexLayout.xml
 
 /ImagesCompressed
+.DS_Store
