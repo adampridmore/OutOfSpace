@@ -5,8 +5,11 @@ namespace compress;
 
 internal class Compress
 {
-  private const string ImagesFolder = "/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/Images";
-  private const string DestinationFolder = "/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesCompressed";
+  public const string ImagesFolder = "/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/Images";
+  public const string DestinationFolder = "/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesCompressed";
+  public const string DestinationFolderDecompressed = "/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesDecompressed";
+
+  public const string CompressDetailsFilename = "compress.txt";
 
   private static string ComputeHash(byte[] image)
   {
@@ -25,7 +28,7 @@ internal class Compress
     Directory.Delete(DestinationFolder, true);
     Directory.CreateDirectory(DestinationFolder);
     
-    using var compressStreamWriter = File.CreateText(Path.Combine(DestinationFolder, "compress.txt"));
+    using var compressStreamWriter = File.CreateText(Path.Combine(DestinationFolder, CompressDetailsFilename));
 
     var fileHashes = new Dictionary<string, List<string>>();
 

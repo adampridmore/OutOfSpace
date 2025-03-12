@@ -4,6 +4,7 @@
     <attachedFolders>
       <Path>Images</Path>
       <Path>ImagesCompressed</Path>
+      <Path>ImagesDecompressed</Path>
       <Path>Previews</Path>
       <Path>docs</Path>
     </attachedFolders>
