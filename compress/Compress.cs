@@ -24,7 +24,7 @@ internal class Compress
   {
 
     var fileNames = Directory.GetFiles(ImagesFolder);
-    // Directory.GetFiles(destinationFolder);
+    
     Directory.Delete(DestinationFolder, true);
     Directory.CreateDirectory(DestinationFolder);
     
@@ -62,30 +62,19 @@ internal class Compress
         var destinationFilename = Path.Combine(DestinationFolder, Path.GetFileName(filename));
 
         File.Copy(filename, destinationFilename);
-
-        // TODO: Make note somewhere that there's a copy
+        
         foreach (var fileNameThatIsACopy in fileNamesToCopy.Skip(1))
         {
           var compressionLine = $"{Path.GetFileName(filename)} COPY {Path.GetFileName(fileNameThatIsACopy)} ";
           compressStreamWriter.WriteLine(compressionLine);
         }
       }
-
-      // Console.WriteLine(filename);
-      //
-      // var destinationFilename = Path.Combine(destinationFolder, Path.GetFileName(filename));
-      //
-      // File.Copy(filename, destinationFilename);
     }
 
-    foreach (var keyValue in fileHashes)
-    {
-      Console.WriteLine($"hash: {keyValue.Key} filename {keyValue.Value.Count}");
-      // foreach (var filename in keyValue.Value)
-      // {
-      //     Console.WriteLine($"hash: {keyValue.Key} filename {filename}");    
-      // }
-      // // Console.WriteLine($"hash: {keyValue.Key} filename {keyValue.Value.Count}");
-    }
+    // Write out hashes and number of duplicates
+    // foreach (var keyValue in fileHashes)
+    // {
+    //   Console.WriteLine($"hash: {keyValue.Key} filename {keyValue.Value.Count}");
+    // }
   }
 }

@@ -1,6 +1,6 @@
 ﻿namespace compress;
 
-public class Decomress()
+public class Decompress
 {
     public void Execute()
     {
