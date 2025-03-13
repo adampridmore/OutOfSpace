@@ -75,11 +75,24 @@ public class HexParser
         Assert.Equal(expectedDecodedText, RleDecode(textToRleDecode));
     }
 
-    private string RleDecode(string hexToDecode)
+    [Fact]
+    public void CompressSif()
     {
-        var byteToDecode = HexToBytes(hexToDecode);
-        var outputBytes = new List<byte>();
+        var imageBytes = File.ReadAllBytes(@"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/Images/_DSC2240_DxO.sif");
+        var convertedBytes = RleEncode(imageBytes);
 
+        var destinationFileRle = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRle/_DSC2240_DxO.sif";
+        File.WriteAllBytes(destinationFileRle, convertedBytes);
+
+        var decodeBytes = RleDecode(convertedBytes);
+
+        var destinationFileDecoded = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRleDecompressed/_DSC2240_DxO.sif";
+
+        File.WriteAllBytes(destinationFileDecoded, decodeBytes);
+    }
+
+    private byte[] RleDecode(byte[] byteToDecode)
+    {
         var decoded = byteToDecode
             .Chunk(2)
             .SelectMany(pair =>
@@ -90,13 +103,18 @@ public class HexParser
             })
             .ToArray();
 
-        return BytesToHex(decoded);
+        return decoded.ToArray();
     }
     
-    
-    private string RleEncode(string hexString)
+    private string RleDecode(string hexToDecode)
     {
-        var inputBytes = HexToBytes(hexString);
+        var byteToDecode = HexToBytes(hexToDecode);
+
+        return BytesToHex(RleDecode(byteToDecode.ToArray()));
+    }
+
+    private byte[] RleEncode(byte[] inputBytes)
+    {
         byte? currentByte = null;
         var currentByteCount = 0;
         
@@ -127,6 +145,12 @@ public class HexParser
             outputBytes.Add(Convert.ToByte(currentByteCount));
         }
 
-        return BytesToHex(outputBytes.ToArray());
+        return outputBytes.ToArray();
+    }
+    
+    private string RleEncode(string hexString)
+    {
+        var inputBytes = HexToBytes(hexString).ToArray();
+        return BytesToHex(RleEncode(inputBytes));
     }
 }

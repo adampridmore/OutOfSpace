@@ -399,8 +399,9 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /.DS_Store/
-.idea/.idea.OutOfSpace/.idea/indexLayout.xml
+/.idea
 
-/ImagesCompressed
-.DS_Store
-ImagesDecompressed/
+/ImagesCompressed/
+/ImagesDecompressed/
+/ImagesRle/
+/ImagesRleDecompressed/
