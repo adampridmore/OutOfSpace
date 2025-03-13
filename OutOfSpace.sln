@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Story", "Story", "{835F76F3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewImageWeb", "ViewImageWeb\ViewImageWeb.csproj", "{BF0F7E5E-5A8F-4501-9513-863A1F7CBB44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "compress", "compress\compress.csproj", "{D2C87162-1F48-4D05-995A-4F3617467848}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "compress_Adam_Nagesh", "compress_Adam_Nagesh\compress_Adam_Nagesh.csproj", "{D2C87162-1F48-4D05-995A-4F3617467848}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
