@@ -1,35 +1,32 @@
-using System.Globalization;
 using static CompressLib.HexParser;
 
 namespace CompressLib;
 
 public static class RunLengthEncoding
 {
-    public static byte[] RleDecode2(byte[] byteToDecode)
+    public static Byte3[] RleDecode2(Byte3[] byteToDecode)
     {
-        byte? TryGetByte(byte[] bytes, int index)
+        Byte3? TryGetByte3(Byte3[] bytes, int index)
         {
-            if (index < bytes.Length)
-            {
-                return bytes[index];
-            }
-            else
+            if (index >= bytes.Length)
             {
                 return null;
             }
+            
+            return bytes[index];
         }
         
-        var decodedBytes = new List<byte>();
+        var decodedBytes = new List<Byte3>();
         for (var i = 0 ; i < byteToDecode.Length; i++)
         {
             var firstByte =  byteToDecode[i];
-            var secondByte = TryGetByte(byteToDecode, i + 1);
-            var thirdByte = TryGetByte(byteToDecode, i + 2);
+            var secondByte = TryGetByte3(byteToDecode, i + 1);
+            var thirdByte = TryGetByte3(byteToDecode, i + 2);
             
             if (firstByte == secondByte)
             {
                 var b = firstByte;
-                var runCount = thirdByte.Value;
+                var runCount = thirdByte.ToInt();
                 decodedBytes.AddRange(Enumerable.Repeat(b, runCount).ToList());
                 i += 2;
             }
@@ -49,31 +46,31 @@ public static class RunLengthEncoding
         return BytesToHex(RleDecode2(byteToDecode.ToArray()));
     }
     
-    public static byte[] RleEncode2(byte[] inputBytes)
+    public static Byte3[] RleEncode2(Byte3[] inputBytes)
     {
-        void WriteRleEncodedValue(byte? currentByte1, List<byte> bytes, int count)
+        void WriteRleEncodedValue(Byte3? currentByte1, List<Byte3> bytes, int count)
         {
-            if (!currentByte1.HasValue)
+            if (currentByte1 == null)
             {
                 return;
             }
 
             if (count == 1)
             {
-                bytes.Add(currentByte1.Value);
+                bytes.Add(currentByte1);
             }
             else
             {
-                bytes.Add(currentByte1.Value);
-                bytes.Add(currentByte1.Value);
-                bytes.Add(Convert.ToByte(count));                
+                bytes.Add(currentByte1);
+                bytes.Add(currentByte1);
+                bytes.Add(new Byte3(0, 0, Convert.ToByte(count)));
             }
         }
 
-        byte? currentByte = null;
+        Byte3? currentByte = null;
         var currentByteCount = 0;
         
-        var outputBytes = new List<byte>();
+        var outputBytes = new List<Byte3>();
         
         foreach (var b in inputBytes)
         {
@@ -83,7 +80,7 @@ public static class RunLengthEncoding
             }
             else
             {
-                if (currentByte.HasValue)
+                if (currentByte!=null)
                 {
                     WriteRleEncodedValue(currentByte, outputBytes, currentByteCount);
                 }

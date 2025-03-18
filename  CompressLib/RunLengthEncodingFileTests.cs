@@ -5,52 +5,53 @@ namespace CompressLib;
 
 public class RunLengthEncodingFileTests
 {
-    private string imagesFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/Images";
-    private string imagesRleFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRle";
-    private string imagesRleDecompressedFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRleDecompressed";
+    private string _imagesFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/Images";
+    private string _imagesRleFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRle";
+    private string _imagesRleDecompressedFolder = @"/Users/adampridmore/work/Dev/york-code-dojo/OutOfSpace/ImagesRleDecompressed";
 
     // [Fact(Skip = "In progress")]
     [Fact]
     public void CompressSif()
     {
-        var imageBytes = File.ReadAllBytes(Path.Combine(imagesFolder,"_DSC2240_DxO.sif"));
-        var convertedBytes = RleEncode2(imageBytes);
+        var imageBytes = File.ReadAllBytes(Path.Combine(_imagesFolder,"_DSC2240_DxO.sif"));
+        
+        var convertedBytes = RleEncode2(Byte3.ToByte3(imageBytes));
 
-        var destinationFileRle = Path.Combine(imagesRleFolder, "_DSC2240_DxO.sif");
-        File.WriteAllBytes(destinationFileRle, convertedBytes);
+        var destinationFileRle = Path.Combine(_imagesRleFolder, "_DSC2240_DxO.sif");
+        File.WriteAllBytes(destinationFileRle, Byte3.ToRawBytes(convertedBytes));
 
         var decodeBytes = RleDecode2(convertedBytes);
 
-        var destinationFileDecoded = Path.Combine(imagesRleDecompressedFolder, "_DSC2240_DxO.sif");
-        
-        File.WriteAllBytes(destinationFileDecoded, decodeBytes);
+        var destinationFileDecoded = Path.Combine(_imagesRleDecompressedFolder, "_DSC2240_DxO.sif");
+
+        File.WriteAllBytes(destinationFileDecoded, Byte3.ToRawBytes(decodeBytes));
     }
     
     [Fact]
     public void RleAllFiles()
     {
-        Directory.Delete(imagesRleFolder, true);
-        Directory.CreateDirectory(imagesRleFolder);
+        Directory.Delete(_imagesRleFolder, true);
+        Directory.CreateDirectory(_imagesRleFolder);
         
-        Directory.Delete(imagesRleDecompressedFolder, true);
-        Directory.CreateDirectory(imagesRleDecompressedFolder);
+        Directory.Delete(_imagesRleDecompressedFolder, true);
+        Directory.CreateDirectory(_imagesRleDecompressedFolder);
 
-        foreach (var filename in Directory.GetFiles(imagesFolder))
+        foreach (var filename in Directory.GetFiles(_imagesFolder))
         {
             var bytes = File.ReadAllBytes(filename);
-            var rleBytes = RleEncode2(bytes);
+            var rleBytes = RleEncode2(Byte3.ToByte3(bytes));
 
-            var destinationFile = Path.Combine(imagesRleFolder, Path.GetFileName(filename));
-            File.WriteAllBytes(destinationFile, rleBytes);
+            var destinationFile = Path.Combine(_imagesRleFolder, Path.GetFileName(filename));
+            File.WriteAllBytes(destinationFile, Byte3.ToRawBytes(rleBytes));
         }
         
-        foreach (var filename in Directory.GetFiles(imagesRleFolder))
+        foreach (var filename in Directory.GetFiles(_imagesRleFolder))
         {
             var bytes = File.ReadAllBytes(filename);
-            var rleBytes = RleDecode2(bytes);
+            var rleBytes = RleDecode2(Byte3.ToByte3(bytes));
 
-            var destinationFile = Path.Combine(imagesRleDecompressedFolder, Path.GetFileName(filename));
-            File.WriteAllBytes(destinationFile, rleBytes);
+            var destinationFile = Path.Combine(_imagesRleDecompressedFolder, Path.GetFileName(filename));
+            File.WriteAllBytes(destinationFile, Byte3.ToRawBytes(rleBytes));
         }
     }
     

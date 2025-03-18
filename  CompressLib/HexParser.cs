@@ -9,18 +9,20 @@ public static class HexParser
         return byte.Parse(hexDigit, NumberStyles.HexNumber);
     }
     
-    public static string BytesToHex(byte [] bytes)
+    public static string BytesToHex(Byte3[] bytes)
     {
         return BitConverter
-            .ToString(bytes)
+            .ToString(Byte3.ToRawBytes(bytes))
             .Replace("-", " ");
     }
 
-    public static IEnumerable<byte> HexToBytes(string hex)
+    public static IEnumerable<Byte3> HexToBytes(string hex)
     {
         return hex
             .Split(" ")
             .Select(TextDigitToByte)
+            .Chunk(3)
+            .Select(a => new Byte3(a[0], a[1], a[2]))
             .ToArray();
     }
 }

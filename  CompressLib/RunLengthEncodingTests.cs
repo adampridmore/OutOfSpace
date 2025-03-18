@@ -1,6 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Security.Principal;
-using static CompressLib.HexParser;
 using static CompressLib.RunLengthEncoding;
 
 namespace CompressLib;
@@ -10,9 +7,9 @@ public class RunLengthEncodingTests
     [Fact]
     public void RleText2()
     {
-        var textToRle = "01 01 01";
+        var textToRle = "01 02 03 01 02 03 01 02 03 01 02 03";
         
-        var expectedRleTest = "01 01 03";
+        var expectedRleTest = "01 02 03 01 02 03 00 00 04";
         
         Assert.Equal(expectedRleTest, RleEncode2(textToRle));
     }
@@ -32,7 +29,7 @@ public class RunLengthEncodingTests
     {
         string textToRle =  String.Join("", Enumerable.Repeat("01 ", 510)).Trim();
         
-        var expectedRleTest = "01 01 FF 01 01 FF";
+        var expectedRleTest = "01 01 01 01 01 01 00 00 AA";
         
         Assert.Equal(expectedRleTest, RleEncode2(textToRle));
     }
@@ -40,9 +37,9 @@ public class RunLengthEncodingTests
     [Fact]
     public void DecodeRleText2()
     {
-        var textToRleDecode = "01 01 03";
+        var textToRleDecode = "01 01 01 01 01 01 01 01 03";
         
-        var expectedDecodedText = "01 01 01";
+        var expectedDecodedText = "01 01 01 01 01 01 01 01 01";
         
         Assert.Equal(expectedDecodedText, RleDecode2(textToRleDecode));
     }
