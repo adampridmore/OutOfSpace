@@ -7,17 +7,29 @@ public static class RunLengthEncoding
 {
     public static byte[] RleDecode2(byte[] byteToDecode)
     {
+        byte? TryGetByte(byte[] bytes, int index)
+        {
+            if (index < bytes.Length)
+            {
+                return bytes[index];
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
         var decodedBytes = new List<byte>();
         for (var i = 0 ; i < byteToDecode.Length; i++)
         {
             var firstByte =  byteToDecode[i];
-            var secondByte = byteToDecode[i + 1];
-            var thirdByte = byteToDecode[i + 2];
+            var secondByte = TryGetByte(byteToDecode, i + 1);
+            var thirdByte = TryGetByte(byteToDecode, i + 2);
             
             if (firstByte == secondByte)
             {
                 var b = firstByte;
-                var runCount = thirdByte;
+                var runCount = thirdByte.Value;
                 decodedBytes.AddRange(Enumerable.Repeat(b, runCount).ToList());
                 i += 2;
             }
@@ -39,16 +51,23 @@ public static class RunLengthEncoding
     
     public static byte[] RleEncode2(byte[] inputBytes)
     {
-        void WriteRleEncodedValue(byte? currentByte1, List<byte> bytes, int i)
+        void WriteRleEncodedValue(byte? currentByte1, List<byte> bytes, int count)
         {
             if (!currentByte1.HasValue)
             {
                 return;
             }
 
-            bytes.Add(currentByte1.Value);
-            bytes.Add(currentByte1.Value);
-            bytes.Add(Convert.ToByte(i));
+            if (count == 1)
+            {
+                bytes.Add(currentByte1.Value);
+            }
+            else
+            {
+                bytes.Add(currentByte1.Value);
+                bytes.Add(currentByte1.Value);
+                bytes.Add(Convert.ToByte(count));                
+            }
         }
 
         byte? currentByte = null;

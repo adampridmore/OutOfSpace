@@ -16,7 +16,17 @@ public class RunLengthEncodingTests
         
         Assert.Equal(expectedRleTest, RleEncode2(textToRle));
     }
-
+    
+    [Fact]
+    public void RleText2_DontEncodeSingleBytes()
+    {
+        var textToRle = "01 02 03";
+        
+        var expectedRleTest = "01 02 03";
+        
+        Assert.Equal(expectedRleTest, RleEncode2(textToRle));
+    }
+     
     [Fact]
     public void RleTextWithMoreThat256Repeat()
     {
