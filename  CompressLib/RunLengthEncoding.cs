@@ -4,7 +4,7 @@ namespace CompressLib;
 
 public static class RunLengthEncoding
 {
-    public static Byte3[] RleDecode2(Byte3[] byteToDecode)
+    public static Byte3[] RleDecode(Byte3[] byteToDecode)
     {
         Byte3? TryGetByte3(Byte3[] bytes, int index)
         {
@@ -12,17 +12,17 @@ public static class RunLengthEncoding
             {
                 return null;
             }
-            
+
             return bytes[index];
         }
-        
+
         var decodedBytes = new List<Byte3>();
-        for (var i = 0 ; i < byteToDecode.Length; i++)
+        for (var i = 0; i < byteToDecode.Length; i++)
         {
-            var firstByte =  byteToDecode[i];
+            var firstByte = byteToDecode[i];
             var secondByte = TryGetByte3(byteToDecode, i + 1);
             var thirdByte = TryGetByte3(byteToDecode, i + 2);
-            
+
             if (firstByte == secondByte)
             {
                 var b = firstByte;
@@ -35,69 +35,61 @@ public static class RunLengthEncoding
                 decodedBytes.AddRange(firstByte);
             }
         }
-        
+
         return decodedBytes.ToArray();
     }
-    
-    public static string RleDecode2(string hexToDecode)
+
+    public static string RleDecode(string hexToDecode)
     {
         var byteToDecode = HexToBytes(hexToDecode);
 
-        return BytesToHex(RleDecode2(byteToDecode.ToArray()));
+        return BytesToHex(RleDecode(byteToDecode.ToArray()));
     }
-    
-    public static Byte3[] RleEncode2(Byte3[] inputBytes)
+
+    public static Byte3[] RleEncode(Byte3[] inputBytes)
     {
-        void WriteRleEncodedValue(Byte3? currentByte1, List<Byte3> bytes, int count)
+        void WriteRleEncodedValue(Byte3? currentByte1, List<Byte3> outputBytes, int count)
         {
             if (currentByte1 == null)
             {
                 return;
             }
 
-            if (count == 1)
+            outputBytes.Add(currentByte1);
+            if (count > 1)
             {
-                bytes.Add(currentByte1);
-            }
-            else
-            {
-                bytes.Add(currentByte1);
-                bytes.Add(currentByte1);
-                bytes.Add(new Byte3(0, 0, Convert.ToByte(count)));
+                outputBytes.Add(currentByte1);
+                outputBytes.Add(new Byte3(0, 0, Convert.ToByte(count)));
             }
         }
 
-        Byte3? currentByte = null;
+        Byte3? currentByteRun = null;
         var currentByteCount = 0;
-        
         var outputBytes = new List<Byte3>();
-        
-        foreach (var b in inputBytes)
+
+        foreach (var currentByte in inputBytes)
         {
-            if (b == currentByte && currentByteCount < 255)
+            if (currentByte == currentByteRun && currentByteCount < 255)
             {
                 currentByteCount++;
             }
             else
             {
-                if (currentByte!=null)
-                {
-                    WriteRleEncodedValue(currentByte, outputBytes, currentByteCount);
-                }
-                
-                currentByte = b;
+                WriteRleEncodedValue(currentByteRun, outputBytes, currentByteCount);
+
+                currentByteRun = currentByte;
                 currentByteCount = 1;
             }
         }
-        
-        WriteRleEncodedValue(currentByte, outputBytes, currentByteCount);
+
+        WriteRleEncodedValue(currentByteRun, outputBytes, currentByteCount);
 
         return outputBytes.ToArray();
     }
-    
-    public static string RleEncode2(string hexString)
+
+    public static string RleEncode(string hexString)
     {
         var inputBytes = HexToBytes(hexString).ToArray();
-        return BytesToHex(RleEncode2(inputBytes));
+        return BytesToHex(RleEncode(inputBytes));
     }
 }

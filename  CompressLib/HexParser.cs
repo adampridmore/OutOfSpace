@@ -4,7 +4,7 @@ namespace CompressLib;
 
 public static class HexParser
 {
-    public static byte TextDigitToByte(string hexDigit)
+    private static byte TextDigitToByte(string hexDigit)
     {
         return byte.Parse(hexDigit, NumberStyles.HexNumber);
     }
